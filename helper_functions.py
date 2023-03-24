@@ -1,6 +1,6 @@
 def extract_event_activities(item):
     activity_titles = []
-    if len(item['activities']) == 0: 
+    if not item['activities']: 
         return 'No activities found'
     if len(item['activities']) == 1 and item['activities'][0]['type'] == 'Private discussion': # private discussion activities don't have titles
         return 'No activity title for private discussion'
@@ -10,7 +10,7 @@ def extract_event_activities(item):
 
 def extract_activity_types(item):
     item_activities = item['activities']
-    if len(item['activities']) > 0:
+    if item['activities']:
         item_activities_list = [item['type'] for item in item_activities]
         return '/'.join(item_activities_list)
     else:
