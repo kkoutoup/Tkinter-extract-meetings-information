@@ -20,8 +20,8 @@ def main():
         # end of week = start of week + 6 days
         end_of_week = start_of_week + timedelta(days=6)
         # store to log file
-        # api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={start_of_week}&ToDate={end_of_week}"
-        api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-22&ToDate=2023-03-22"
+        api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={start_of_week}&ToDate={end_of_week}"
+        # api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-22&ToDate=2023-03-22"
         logging.info(f"API endpoint: {api_endpoint}\nfor date range: {datetime.strftime(start_of_week, '%d/%m/%Y')} - {datetime.strftime(end_of_week, '%d/%m/%Y')}\n")
         return api_endpoint
     
@@ -60,8 +60,11 @@ def main():
 
     def extract_activity_types(item):
         item_activities = item['activities']
-        item_activities_list = [item['type'] for item in item_activities if item_activities]
-        return '/'.join(item_activities_list)
+        if len(item['activities']) > 0:
+            item_activities_list = [item['type'] for item in item_activities]
+            return '/'.join(item_activities_list)
+        else:
+            return 'No activity types found'
         
     # container - collecting all data here
     collected_data = []
