@@ -24,9 +24,9 @@ def extract_activities_times(item):
     activity_times = []
     if event_activities:
         for item in event_activities:
-            itemStartTime = datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M:%S')
-            itemEndTime = datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M:%S')
-            activity_times.append([itemStartTime, itemEndTime])
+            item_start_time = datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M')
+            item_end_time = datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M')
+            activity_times.append([item_start_time, item_end_time])
     else:
         activity_times.append('No activity times found')
     return activity_times
