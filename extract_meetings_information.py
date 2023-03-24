@@ -59,15 +59,9 @@ def main():
             return '/'.join(list(dict.fromkeys(activity_titles))) # if more than one activities have the same name then only keep the activity name once
 
     def extract_activity_types(item):
-        item_activities = {}
-        if len(item['activities']) > 0:
-            item_keys_range = range(len(item['activities']))
-            for i in item_keys_range:
-                for j in item['activities']:
-                    item_activities[i] = j['type']
-            return '/'.join(item_activities.values())
-        else:
-            return 'No activities entered in CIS'
+        item_activities = item['activities']
+        item_activities_list = [item['type'] for item in item_activities if item_activities]
+        return '/'.join(item_activities_list)
         
     # container - collecting all data here
     collected_data = []
