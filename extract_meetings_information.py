@@ -7,7 +7,7 @@ from datetime import datetime, date, timedelta
 import logging, json, csv
 
 # local modules
-from helper_functions import extract_activity_types, extract_event_activities
+from helper_functions import extract_activity_types, extract_event_activities, extract_activities_times, format_activities_times
 
 def main():
     # set up logging
@@ -79,9 +79,11 @@ def main():
                             # No of activities
                             'Number of activities': len(item['activities']),
                             # activities
-                            'Activities': extract_event_activities(item),
+                            'Activity titles': extract_event_activities(item),
                             # activity types
                             'Activity types': extract_activity_types(item),
+                            # activities times
+                            'Activities times': format_activities_times(extract_activities_times(item)),
                             # notes
                             'Notes': item['notes'],
                             # Event in CIS
@@ -92,7 +94,7 @@ def main():
     def write_to_csv():
         print("=> Writing to csv")
         with open('week_meetings.csv', 'w', newline='') as output_file:
-            fieldnames = ['Committee name', 'Committee ID', 'Event ID', 'Date', 'Event start time', 'Event end time', 'Location', 'Number of activities', 'Activities', 'Activity types', 'Notes', 'Event in CIS']
+            fieldnames = ['Committee name', 'Committee ID', 'Event ID', 'Date', 'Event start time', 'Event end time', 'Location', 'Number of activities', 'Activity titles', 'Activity types', 'Activities times', 'Notes', 'Event in CIS']
             writer = csv.DictWriter(output_file, fieldnames)
             writer.writeheader()
             writer.writerows(collected_data)

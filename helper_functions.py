@@ -1,3 +1,6 @@
+# Python modules
+from datetime import datetime, date, timedelta
+
 def extract_event_activities(item):
     activity_titles = []
     if not item['activities']: 
@@ -15,3 +18,15 @@ def extract_activity_types(item):
         return '/'.join(item_activities_list)
     else:
         return 'No activity types found'
+    
+def extract_activities_times(item):
+    event_activities = item['activities']
+    activity_times = []
+    if event_activities:
+        for item in event_activities:
+            itemStartTime = datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M:%S')
+            itemEndTime = datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M:%S')
+            activity_times.append([itemStartTime, itemEndTime])
+    else:
+        activity_times.append('No activity times found')
+    return activity_times
