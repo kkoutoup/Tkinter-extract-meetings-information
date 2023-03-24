@@ -76,12 +76,16 @@ def main():
                     collected_data.append({
                             # committe name
                             'Committee name': item['committees'][0]['name'],
+                            # committee ID
+                            'Committee ID': item['committees'][0]['id'],
+                            # event ID
+                            'Event ID': item['id'],
                             # date - from start time
                             'Date': datetime.strftime(datetime.fromisoformat(item['startTime']), '%A %d %B %Y'),
                             # start time
-                            'Start time': datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M:%S'),
+                            'Event start time': datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M:%S'),
                             # end time
-                            'End time': datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M:%S'),
+                            'Event end time': datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M:%S'),
                             # location
                             'Location': item['location']['description'],
                             # No of activities
@@ -92,10 +96,6 @@ def main():
                             'Activity types': extract_activity_types(item),
                             # notes
                             'Notes': item['notes'],
-                            # event ID
-                            'Event ID': item['id'],
-                            # committee ID
-                            'Committee ID': item['committees'][0]['id'],
                             # Event in CIS
                             'Event in CIS': f"https://admin.committees.parliament.uk/Committee/{item['committees'][0]['id']}/Event/Edit/{item['id']}#!/details"
                         })
@@ -104,7 +104,7 @@ def main():
     def write_to_csv():
         print("=> Writing to csv")
         with open('week_meetings.csv', 'w', newline='') as output_file:
-            fieldnames = ['Committee name', 'Date', 'Start time', 'End time', 'Location', 'Number of activities', 'Activities', 'Activity types', 'Notes', 'Event ID', 'Committee ID', 'Event in CIS']
+            fieldnames = ['Committee name', 'Committee ID', 'Event ID', 'Date', 'Event start time', 'Event end time', 'Location', 'Number of activities', 'Activities', 'Activity types', 'Notes', 'Event in CIS']
             writer = csv.DictWriter(output_file, fieldnames)
             writer.writeheader()
             writer.writerows(collected_data)
