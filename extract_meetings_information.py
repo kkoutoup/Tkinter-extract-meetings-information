@@ -42,7 +42,7 @@ def main():
         except Exception as e:
             logging.info(print(f"Oops! {e}"))
 
-    def write_to_file():
+    def write_to_json_file():
         api_response = make_request()
         print("=> Writing to file")
         try:
@@ -55,7 +55,7 @@ def main():
     collected_data = []
 
     # read file and construct dataset
-    def read_file():
+    def read_json_file():
         with open('meetings_data.json', 'r') as input_file:
             data = input_file.read()
             data_to_json = json.loads(data)
@@ -100,8 +100,8 @@ def main():
             writer.writerows(collected_data)
 
     # run sequence
-    write_to_file()
-    read_file()
+    write_to_json_file()
+    read_json_file()
     write_to_csv()
 
 if __name__ == "__main__":
