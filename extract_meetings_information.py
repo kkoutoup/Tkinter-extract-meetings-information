@@ -1,9 +1,13 @@
+# Python modules
 import urllib
 import urllib.request
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
 from datetime import datetime, date, timedelta
 import logging, json, csv
+
+# local modules
+from helper_functions import extract_activity_types, extract_event_activities
 
 def main():
     # set up logging
@@ -21,7 +25,6 @@ def main():
         end_of_week = start_of_week + timedelta(days=6)
         # store to log file
         api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={start_of_week}&ToDate={end_of_week}"
-        # api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-22&ToDate=2023-03-22"
         logging.info(f"API endpoint: {api_endpoint}\nfor date range: {datetime.strftime(start_of_week, '%d/%m/%Y')} - {datetime.strftime(end_of_week, '%d/%m/%Y')}\n")
         return api_endpoint
     
@@ -47,24 +50,6 @@ def main():
                 json.dump(json.loads(api_response), output_file, indent=4) # json loads to get rid of "\" in response
         except Exception as e:
             logging.info("Problems writing to file: {e}")
-
-    def extract_event_activities(item):
-        activity_titles = []
-        if len(item['activities']) == 0: 
-            return 'No activities found'
-        if len(item['activities']) == 1 and item['activities'][0]['type'] == 'Private discussion': # private discussion activities don't have titles
-            return 'No activity title for private discussion'
-        if len(item['activities']) > 0:
-            activity_titles = [activity['subjects'][0] for activity in item['activities'] if activity['subjects']]
-            return '/'.join(list(dict.fromkeys(activity_titles))) # if more than one activities have the same name then only keep the activity name once
-
-    def extract_activity_types(item):
-        item_activities = item['activities']
-        if len(item['activities']) > 0:
-            item_activities_list = [item['type'] for item in item_activities]
-            return '/'.join(item_activities_list)
-        else:
-            return 'No activity types found'
         
     # container - collecting all data here
     collected_data = []
