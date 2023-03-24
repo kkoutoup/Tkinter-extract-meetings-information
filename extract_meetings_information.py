@@ -7,7 +7,7 @@ from datetime import datetime, date, timedelta
 import logging, json, csv
 
 # local modules
-from helper_functions import extract_activity_types, extract_event_activities, extract_activities_times
+from helper_functions import extract_activity_types, extract_event_activities, extract_activities_times, format_activity_times
 
 def main():
     # set up logging
@@ -83,7 +83,7 @@ def main():
                             # activity types
                             'Activity types': extract_activity_types(item),
                             # activities times
-                            'Activities times': extract_activities_times(item),
+                            'Activities times': format_activity_times(extract_activities_times(item)),
                             # notes
                             'Notes': item['notes'],
                             # Event in CIS

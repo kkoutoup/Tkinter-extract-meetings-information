@@ -30,3 +30,13 @@ def extract_activities_times(item):
     else:
         activity_times.append('No activity times found')
     return activity_times
+
+def format_activity_times(times):
+    formatted_times = ""
+    if 'No activity times found' in times:
+        return 'No activity times found'
+    else:
+        for item in times:
+            to_add = f"{item[0]}-{item[1]}/"
+            formatted_times += to_add
+        return formatted_times.rstrip("/")
