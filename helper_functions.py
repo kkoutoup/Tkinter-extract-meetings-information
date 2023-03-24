@@ -1,5 +1,5 @@
 # Python modules
-from datetime import datetime, date, timedelta
+from datetime import datetime
 
 def extract_event_activities(item):
     activity_titles = []
