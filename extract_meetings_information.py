@@ -8,22 +8,16 @@ import logging, json, csv
 
 # local modules
 from helper_functions import extract_activity_types, extract_event_activities, extract_activities_times, format_activity_times
-from user_input import get_user_input
+from user_input import get_user_input, translate_user_input
 
 def main():
     # set up logging
     logging.basicConfig(filename='meetings_report.log', format='%(asctime)s-%(levelname)s\n%(message)s', datefmt='%d/%m/%Y @ %H:%M:%S', filemode='w', level=logging.INFO)
 
     def build_request_url():
-        user_input = get_user_input()
+        user_input = translate_user_input()
         # api endpoint example: 'https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-13&ToDate=2023-03-19' \
-        # calculate date range => start of week - today's date
-        today = date.today()
-        today_as_weekday = today.weekday()
-        # start of week
-        start_of_week = today - timedelta(days=today_as_weekday)
-        # end of week = start of week + 6 days
-        end_of_week = start_of_week + timedelta(days=6)
+        
         # store to log file
         api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={start_of_week}&ToDate={end_of_week}"
         logging.info(f"API endpoint: {api_endpoint}\nfor date range: {datetime.strftime(start_of_week, '%d/%m/%Y')} - {datetime.strftime(end_of_week, '%d/%m/%Y')}\n")

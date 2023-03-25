@@ -1,5 +1,6 @@
 # Python modules
 import re
+from datetime import datetime, date, timedelta
 
 def get_user_input():
     print("Please choose a valid timespan\n 'today' for the day's meetings\n 'week' for this week's meetings \n any other timespan in the following format: dd/mm/yyyy-dd/mm/yyyy")
@@ -17,3 +18,19 @@ def get_user_input():
         else:
             return date_match.group()
 
+def translate_user_input():
+    # possible scenarios: 'today', 'week', date range
+    user_input = get_user_input()
+    # today
+    if user_input == 'today':
+        todays_date = date.today().isoformat()
+        print(f"{todays_date}/{todays_date}") # api endpoint needs two values (from/to) - in this case they match
+    if user_input == 'week':
+        # calculate date range => start of week - today's date
+        today = date.today()
+        today_as_weekday = today.weekday()
+        # start of week
+        start_of_week = today - timedelta(days=today_as_weekday)
+        # end of week = start of week + 6 days
+        end_of_week = start_of_week + timedelta(days=6)
+        print(f"{start_of_week}/{end_of_week}")
