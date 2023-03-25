@@ -1,7 +1,7 @@
 # Python modules
 from datetime import datetime
 
-def extract_event_activities(item):
+def extract_activity_titles(item):
     activity_titles = []
     if not item['activities']: 
         return 'No activities found'

@@ -7,7 +7,7 @@ from datetime import datetime, date, timedelta
 import logging, json, csv
 
 # local modules
-from helper_functions import extract_activity_types, extract_event_activities, extract_activities_times, format_activity_times
+from helper_functions import extract_activity_types, extract_activity_titles, extract_activities_times, format_activity_times
 from user_input import get_user_input, translate_user_input
 
 def main():
@@ -74,7 +74,7 @@ def main():
                             # No of activities
                             'Number of activities': len(item['activities']),
                             # activities
-                            'Activity titles': extract_event_activities(item),
+                            'Activity titles': extract_activity_titles(item),
                             # activity types
                             'Activity types': extract_activity_types(item),
                             # activities times
