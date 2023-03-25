@@ -1,6 +1,7 @@
 # Python modules
 import re
 from datetime import datetime, date, timedelta
+import time
 
 def get_user_input():
     print("Please choose a valid timespan\n 'today' for the day's meetings\n 'week' for this week's meetings \n any other timespan in the following format: dd/mm/yyyy-dd/mm/yyyy")
@@ -24,6 +25,7 @@ def translate_user_input():
     # today
     if user_input == 'today':
         todays_date = date.today()
+        time.sleep(1) # in some cases 'today' was returning 'None'. Pausing script to avoid that.
         return f"{todays_date}/{todays_date}" # api endpoint needs two values (from/to) - in this case they match
     elif user_input == 'week':
         # calculate date range => start of week - today's date
