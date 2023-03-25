@@ -23,9 +23,9 @@ def translate_user_input():
     user_input = get_user_input()
     # today
     if user_input == 'today':
-        todays_date = date.today().isoformat()
-        print(f"{todays_date}/{todays_date}") # api endpoint needs two values (from/to) - in this case they match
-    if user_input == 'week':
+        todays_date = date.today()
+        return f"{todays_date}/{todays_date}" # api endpoint needs two values (from/to) - in this case they match
+    elif user_input == 'week':
         # calculate date range => start of week - today's date
         today = date.today()
         today_as_weekday = today.weekday()
@@ -33,4 +33,8 @@ def translate_user_input():
         start_of_week = today - timedelta(days=today_as_weekday)
         # end of week = start of week + 6 days
         end_of_week = start_of_week + timedelta(days=6)
-        print(f"{start_of_week}/{end_of_week}")
+        return f"{start_of_week}/{end_of_week}" # corresponding to from/to values in api endpoint
+    else:
+        date_range = user_input.split('-')
+        date_range_array = [datetime.strptime(item,'%d/%m/%Y').strftime('%Y-%m-%d') for item in date_range] # string to datetime object and formatted with strftime
+        return'/'.join(date_range_array)
