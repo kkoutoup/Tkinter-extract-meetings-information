@@ -1,5 +1,5 @@
 # Python modules
-from datetime import datetime
+from datetime import datetime, date, timedelta
 
 def extract_activity_titles(item):
     activity_titles = []
@@ -40,3 +40,13 @@ def format_activity_times(times):
             to_add = f"{item[0]}-{item[1]}/"
             formatted_times += to_add
         return formatted_times.rstrip("/")
+    
+def calculate_days_of_the_week():
+    # calculate date range => start of week - today's date
+    today = date.today()
+    today_as_weekday = today.weekday()
+    # start of week
+    start_of_week = today - timedelta(days=today_as_weekday)
+    # end of week = start of week + 6 days
+    end_of_week = start_of_week + timedelta(days=6)
+    return f"{start_of_week}/{end_of_week}" # corresponding to from/to values in api endpoint
