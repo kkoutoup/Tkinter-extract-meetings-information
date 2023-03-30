@@ -41,11 +41,11 @@ def format_activity_times(times):
             formatted_times += to_add
         return formatted_times.rstrip("/")
     
-def calculate_days_of_the_week():
-    # calculate date range => start of week - today's date
+def calculate_days_of_the_week(): # this returns a date range that is the start and end of the current week based on the date the script is run
+    # today
     today = date.today()
     today_as_weekday = today.weekday()
-    # start of week
+    # start of week based on today
     start_of_week = today - timedelta(days=today_as_weekday)
     # end of week = start of week + 6 days
     end_of_week = start_of_week + timedelta(days=6)
