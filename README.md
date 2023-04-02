@@ -1,9 +1,10 @@
 # Tkinter extract committee meetings information from Parliament's API
-A Python script that extracts committee meetings information from UK Parliament's API based on user choice.
+Python script that extracts committee meetings information from UK Parliament's API based on user choice with a Tkinter user interface.
 - Today's meetings
 - Week's meetings
 - Meetings within a date range
 Gathered data are exported in csv and json format.
+This is an alternative to [this Python script](https://github.com/kkoutoup/API-extract-meetings-information) that gets user input through the terminal.
 
 ## Category
 API/data collection
@@ -13,9 +14,10 @@ Help with checking committee meetings information appearing in Parliament's publ
 
 ## Instructions
 - Download repo
-- Run ```extract_meetings_information.py```
-- Select between ```today```, ```week``` or ```date range```
+- Run ```extract_meetings_information.pyw```
+- In the new window select between ```today```, ```week``` or ```date range```
 to extract meetings information for the day, week or date range respectively.
+- Click the "Fetch results" button and close the window. A .log, .json and .csv file should appear in the project's folder.
 
 ## Data collected
 The following data is collected for each meeting:
@@ -35,6 +37,7 @@ The following data is collected for each meeting:
 
 ## Dependencies
 Built in Python 3.11.2 with the following modules
+- tkinter
 - urllib
 - json
 - csv
