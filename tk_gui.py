@@ -6,7 +6,7 @@ import re
 def disable_radio_buttons():
     user_radio_today.config(state = "disabled")
     user_radio_week.config(state = "disabled")
-    
+
 # validate values entered in entry fields
 def validate_date_inputs():
     # target user input
@@ -26,7 +26,11 @@ root.title("Committee meetings information")
 
 # root window size
 root.resizable(FALSE, FALSE) # prevent window from resizing
-root.geometry("500x300")
+root_width = 500
+root_height = 300
+screen_width = root.winfo_screenwidth()
+screen_height = root.winfo_screenheight()
+root.geometry(f"{root_width}x{root_height}+{int(((screen_width)-root_width)/2)}+{int(((screen_height)-root_height)/2)}")
 
 # style - fonts
 widget_font = font.Font(family ='TkDefaultFont', size = 12)
