@@ -37,7 +37,7 @@ root.title("Committee meetings information")
 # root window size
 root.resizable(FALSE, FALSE) # prevent window from resizing
 root_width = 500
-root_height = 400
+root_height = 350
 screen_width = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
 root.geometry(f"{root_width}x{root_height}+{int(((screen_width)-root_width)/2)}+{int(((screen_height)-root_height)/2)}") # center window on screen
