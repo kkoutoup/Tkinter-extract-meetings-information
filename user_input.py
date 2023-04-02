@@ -5,25 +5,11 @@ import time
 
 # local modules
 from helper_functions import calculate_days_of_the_week
-
-def get_user_input():
-    while True:
-        print("Please choose a valid timespan\n 'today' for the day's meetings\n 'week' for this week's meetings \n any other timespan in the following format: dd/mm/yyyy-dd/mm/yyyy")
-        user_input = input()
-        # check for 'today' or 'week'
-        accepted_values = ['today', 'week']
-        # check for other formats
-        date_regex = re.compile(r'\d{2}\/\d{2}\/\d{4}\-\d{2}\/\d{2}\/\d{4}')
-        date_match = re.match(date_regex, user_input)
-        # check input and break or run again
-        if user_input in accepted_values:
-            return user_input
-        if date_match:
-            return date_match.group()
+from tk_gui import *
 
 def translate_user_input():
     # possible scenarios: 'today', 'week', date range
-    user_input = get_user_input()
+    user_input = validate_date_inputs()
     # today
     if user_input == 'today':
         todays_date = date.today()

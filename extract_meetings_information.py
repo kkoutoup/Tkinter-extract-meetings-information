@@ -8,7 +8,8 @@ import logging, json, csv
 
 # local modules
 from helper_functions import extract_activity_types, extract_activity_titles, extract_activities_times, format_activity_times
-from user_input import get_user_input, translate_user_input
+from tk_gui import *
+from user_input import translate_user_input
 
 def main():
     # set up logging
@@ -16,7 +17,6 @@ def main():
 
     def build_request_url():
         user_input = translate_user_input()
-        print(user_input)
         # api endpoint example: 'https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-13&ToDate=2023-03-19' \
         # store to log file
         api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={user_input.split('/')[0]}&ToDate={user_input.split('/')[1]}"
