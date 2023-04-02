@@ -1,4 +1,4 @@
-# Extract committee meetings information from Parliament's API
+# Tkinter extract committee meetings information from Parliament's API
 A Python script that extracts committee meetings information from UK Parliament's API based on user choice.
 - Today's meetings
 - Week's meetings
