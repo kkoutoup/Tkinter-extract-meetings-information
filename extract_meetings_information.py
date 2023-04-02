@@ -9,7 +9,7 @@ import logging, json, csv
 # local modules
 from helper_functions import extract_activity_types, extract_activity_titles, extract_activities_times, format_activity_times
 from tk_gui import *
-from user_input import translate_user_input
+from translate_user_input import translate_user_input
 
 def main():
     # set up logging

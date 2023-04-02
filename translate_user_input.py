@@ -1,11 +1,10 @@
 # Python modules
-import re
 from datetime import datetime, date
 import time
 
 # local modules
 from helper_functions import calculate_days_of_the_week
-from tki_logic import validate_date_inputs
+from tk_gui import validate_date_inputs
 
 def translate_user_input():
     # possible scenarios: 'today', 'week', date range
