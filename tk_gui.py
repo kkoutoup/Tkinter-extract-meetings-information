@@ -73,7 +73,7 @@ radio_confirm_button = ttk.Button(widget_frame, text = "Fetch results", command 
 root.bind('<Button>', return_pressed_button) # monitor which button is pressed globally
 
 # user error labels - output warning message to user
-label_text = StringVar() # setting as StringVar to use set() later
+label_text = StringVar() # setting as StringVar to change its contents with set() later
 label_text.set("")
 second_label_text = StringVar()
 second_label_text.set("")
