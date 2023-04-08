@@ -7,11 +7,21 @@ import re
 # local modules
 import config
 
-# identify the button that was pressed and log in config.py
+# identify which button was pressed
 def return_pressed_button(event):
     global event_target
     event_target = str(event.widget)
     return event_target
+
+# check if dates are in the right order
+def check_dates_order():
+    if config.button_pressed == '.!frame5.!button':
+        if config.calendar_from_date > config.calendar_to_date:
+            config.dates_in_right_order = False
+            button_label_text.set("Dates are in the wrong order")
+        else:
+            button_label_text.set(f"Fetching results for {config.calendar_from_date} to {config.calendar_to_date}. You may now close this window.")
+            config.dates_in_right_order = True
 
 # set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():
@@ -78,7 +88,7 @@ calendar_from_frame.pack(side = LEFT)
 # calendar 'from date' picker
 cal_from_date = DateEntry(calendar_from_frame, selectmode = "day", font = widget_font)
 cal_from_date.pack()
-# cal_from_date.bind("<<DateEntrySelected>>", get_from_date)
+# cal_from_date.bind("<<DateEntrySelected>>", get_from_date) - test which start date was selected
 
 # parent for 'to date' label and 'calendar to' frame
 parent_two_frame = ttk.Frame(root, padding = 10)
@@ -92,15 +102,23 @@ calendar_to_frame.pack(side = LEFT)
 # caledar 'to date' picker
 cal_to_date = DateEntry(calendar_to_frame, selectmode = "day", font = widget_font)
 cal_to_date.pack()
-# cal_to_date.bind("<<DateEntrySelected>>", get_to_date)
+# cal_to_date.bind("<<DateEntrySelected>>", get_to_date) - test which end date was selected
 
-# calendar button
+# button label frame and label
+button_label_frame = ttk.Frame(root)
+button_label_frame.pack(anchor = N, side = TOP, fill = X)
+button_label_text = StringVar()
+button_label = ttk.Label(button_label_frame, textvariable = button_label_text, font = widget_font, wraplength = root_width)
+button_label.pack(side = LEFT)
+
+# calendar button frame
 calendar_button_frame = ttk.Frame(root, height = 10)
 calendar_button_frame.pack(anchor = N, side = LEFT)
-calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch", command = lambda: [return_user_input()])
+# button
+calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch results", command = lambda: [return_user_input(), check_dates_order()])
 calendar_fetch_button.config(width = 20, padding = "2 2 2 2")
-calendar_fetch_button.pack()
+calendar_fetch_button.pack(anchor = N, side = LEFT)
 
 # run window loop
-root.bind("<Button>", return_pressed_button)
+root.bind("<Button>", return_pressed_button) # monitor which button is getting clicked
 root.mainloop()
