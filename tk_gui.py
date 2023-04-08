@@ -24,8 +24,8 @@ def get_to_date(e):
 def return_user_input():
     date_picker_from_date = from_date
     date_picker_to_date = to_date
-    print(from_date)
-    print(to_date)
+    print(date_picker_from_date)
+    print(date_picker_to_date)
 
 # validate user input and return values for api request
 # def validate_date_inputs():
@@ -105,7 +105,8 @@ cal_to_date.bind("<<DateEntrySelected>>", get_to_date)
 # calendar button
 calendar_button_frame = ttk.Frame(root, height = 10)
 calendar_button_frame.pack(anchor = N, side = LEFT)
-calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch")
+calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch", command = return_user_input)
+calendar_fetch_button.config(width = 20, padding = "2 2 2 2")
 calendar_fetch_button.pack()
 
 # run window loop
