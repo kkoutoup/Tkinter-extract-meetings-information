@@ -1,3 +1,3 @@
-from_date = None
-to_date = None
+calendar_from_date = None
+calendar_to_date = None
 button_pressed = None

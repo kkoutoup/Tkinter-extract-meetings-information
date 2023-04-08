@@ -8,7 +8,8 @@ from tk_gui import *
 import config
 
 def translate_user_input():
-    pass
+    if config.button_pressed == '.!frame4.!button': # if user pressed the calendar fetch button
+        return [config.calendar_from_date, config.calendar_to_date]
     # possible scenarios: 'today', 'week', date range
     # user_input = return_user_input()
     # today

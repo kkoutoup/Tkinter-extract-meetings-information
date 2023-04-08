@@ -9,13 +9,15 @@ import config
 
 # identify the button that was pressed and log in config.py
 def return_pressed_button(event):
+    global event_target
     event_target = str(event.widget)
     return event_target
 
-# set from_date and to_date in config.py
+# set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():
-    config.from_date = cal_from_date.get_date()
-    config.to_date = cal_to_date.get_date()
+    config.calendar_from_date = cal_from_date.get_date()
+    config.calendar_to_date = cal_to_date.get_date()
+    config.button_pressed = str(event_target)
 
 # validate user input and return values for api request
 # def validate_date_inputs():
@@ -100,6 +102,5 @@ calendar_fetch_button.config(width = 20, padding = "2 2 2 2")
 calendar_fetch_button.pack()
 
 # run window loop
+root.bind("<Button>", return_pressed_button)
 root.mainloop()
-
-# command = lambda:[validate_date_inputs()]
