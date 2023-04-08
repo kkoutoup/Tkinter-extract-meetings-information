@@ -20,8 +20,8 @@ def check_dates_order():
             config.dates_in_right_order = False
             button_label_text.set("Dates are in the wrong order")
         else:
-            button_label_text.set(f"Fetching results for {config.calendar_from_date} to {config.calendar_to_date}. You may now close this window.")
             config.dates_in_right_order = True
+            button_label_text.set(f"Fetching results for {config.calendar_from_date} to {config.calendar_to_date}. You may now close this window.")
 
 # set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():
