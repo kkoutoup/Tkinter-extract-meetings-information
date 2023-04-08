@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk, font
 from tkcalendar import Calendar, DateEntry
-import re
+import datetime
 
 # local modules
 import config
@@ -21,7 +21,7 @@ def check_dates_order():
             button_label_text.set("Dates are in the wrong order")
         else:
             config.dates_in_right_order = True
-            button_label_text.set(f"Fetching results for {config.calendar_from_date} to {config.calendar_to_date}. You may now close this window.")
+            button_label_text.set(f"Fetching results for {datetime.date.strftime(datetime.date.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {datetime.date.strftime(datetime.date.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
 # set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():
@@ -67,7 +67,7 @@ root.geometry(f"{root_width}x{root_height}+{int(((screen_width)-root_width)/2)}+
 # style - fonts
 instructions_font = font.Font(family ='TkDefaultFont', size = 12)
 widget_font = font.Font(family ='TkDefaultFont', size = 11)
-message_font = font.Font(family ='TkDefaultFont', size = 12, weight ='bold')
+message_font = font.Font(family ='TkDefaultFont', size = 11, weight ='bold')
 
 # date picker instructions frame
 date_picker_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
@@ -88,7 +88,6 @@ calendar_from_frame.pack(side = LEFT)
 # calendar 'from date' picker
 cal_from_date = DateEntry(calendar_from_frame, selectmode = "day", font = widget_font)
 cal_from_date.pack()
-# cal_from_date.bind("<<DateEntrySelected>>", get_from_date) - test which start date was selected
 
 # parent for 'to date' label and 'calendar to' frame
 parent_two_frame = ttk.Frame(root, padding = 10)
@@ -102,13 +101,12 @@ calendar_to_frame.pack(side = LEFT)
 # caledar 'to date' picker
 cal_to_date = DateEntry(calendar_to_frame, selectmode = "day", font = widget_font)
 cal_to_date.pack()
-# cal_to_date.bind("<<DateEntrySelected>>", get_to_date) - test which end date was selected
 
 # button label frame and label
-button_label_frame = ttk.Frame(root)
+button_label_frame = ttk.Frame(root, padding = "12 10 0 5")
 button_label_frame.pack(anchor = N, side = TOP, fill = X)
 button_label_text = StringVar()
-button_label = ttk.Label(button_label_frame, textvariable = button_label_text, font = widget_font, wraplength = root_width)
+button_label = ttk.Label(button_label_frame, textvariable = button_label_text, font = message_font, wraplength = root_width)
 button_label.pack(side = LEFT)
 
 # calendar button frame

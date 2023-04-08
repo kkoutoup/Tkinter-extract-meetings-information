@@ -1,7 +1,6 @@
 # Python modules
 from datetime import datetime, date
 import time
-import sys
 
 # local modules
 from helper_functions import calculate_days_of_the_week
