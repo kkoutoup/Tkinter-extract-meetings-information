@@ -5,27 +5,17 @@ from tkcalendar import Calendar, DateEntry
 import re
 
 # local modules
-from config import from_date, to_date
+import config
 
-# identify the button that was pressed and return corresponding value
+# identify the button that was pressed and log in config.py
 def return_pressed_button(event):
-    global event_target
     event_target = str(event.widget)
     return event_target
 
-# get 'from date' value
-def get_from_date(e):
-    from_date = cal_from_date.get_date()
-
-# get 'to date' value
-def get_to_date(e):
-    to_date = cal_to_date.get_date()
-
+# set from_date and to_date in config.py
 def return_user_input():
-    date_picker_from_date = from_date
-    date_picker_to_date = to_date
-    print(date_picker_from_date)
-    print(date_picker_to_date)
+    config.from_date = cal_from_date.get_date()
+    config.to_date = cal_to_date.get_date()
 
 # validate user input and return values for api request
 # def validate_date_inputs():
@@ -86,7 +76,7 @@ calendar_from_frame.pack(side = LEFT)
 # calendar 'from date' picker
 cal_from_date = DateEntry(calendar_from_frame, selectmode = "day", font = widget_font)
 cal_from_date.pack()
-cal_from_date.bind("<<DateEntrySelected>>", get_from_date)
+# cal_from_date.bind("<<DateEntrySelected>>", get_from_date)
 
 # parent for 'to date' label and 'calendar to' frame
 parent_two_frame = ttk.Frame(root, padding = 10)
@@ -100,14 +90,16 @@ calendar_to_frame.pack(side = LEFT)
 # caledar 'to date' picker
 cal_to_date = DateEntry(calendar_to_frame, selectmode = "day", font = widget_font)
 cal_to_date.pack()
-cal_to_date.bind("<<DateEntrySelected>>", get_to_date)
+# cal_to_date.bind("<<DateEntrySelected>>", get_to_date)
 
 # calendar button
 calendar_button_frame = ttk.Frame(root, height = 10)
 calendar_button_frame.pack(anchor = N, side = LEFT)
-calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch", command = return_user_input)
+calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch", command = lambda: [return_user_input()])
 calendar_fetch_button.config(width = 20, padding = "2 2 2 2")
 calendar_fetch_button.pack()
 
 # run window loop
 root.mainloop()
+
+# command = lambda:[validate_date_inputs()]
