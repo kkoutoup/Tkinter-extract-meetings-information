@@ -19,8 +19,7 @@ def main():
         user_input = translate_user_input()
         # api endpoint example: 'https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-13&ToDate=2023-03-19' \
         # store to log file
-        api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={user_input.split('/')[0]}&ToDate={user_input.split('/')[1]}"
-        logging.info(f"API endpoint: {api_endpoint}\nfor date range: {datetime.strptime(user_input.split('/')[0],'%Y-%m-%d').strftime('%d/%m/%Y')} - {datetime.strptime(user_input.split('/')[1],'%Y-%m-%d').strftime('%d/%m/%Y')}\n")
+        api_endpoint = f"https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate={user_input[0]}&ToDate={user_input[1]}"
         return api_endpoint
     
     def make_request():
