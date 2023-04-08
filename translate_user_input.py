@@ -4,7 +4,8 @@ import time
 
 # local modules
 from helper_functions import calculate_days_of_the_week
-from tk_gui import * 
+from tk_gui import *
+from config import selected_dates
 
 def translate_user_input():
     # possible scenarios: 'today', 'week', date range

@@ -4,32 +4,49 @@ from tkinter import ttk, font
 from tkcalendar import Calendar, DateEntry
 import re
 
+# local modules
+from config import from_date, to_date
+
 # identify the button that was pressed and return corresponding value
 def return_pressed_button(event):
     global event_target
     event_target = str(event.widget)
     return event_target
 
+# get 'from date' value
+def get_from_date(e):
+    from_date = cal_from_date.get_date()
+
+# get 'to date' value
+def get_to_date(e):
+    to_date = cal_to_date.get_date()
+
+def return_user_input():
+    date_picker_from_date = from_date
+    date_picker_to_date = to_date
+    print(from_date)
+    print(to_date)
+
 # validate user input and return values for api request
-def validate_date_inputs():
-    if str(event_target) == '.!frame.!button':
-        # target user input
-        inputs_combined = f"{from_date.get()}-{to_date.get()}"
-        # check for valid input
-        date_regex = re.compile(r'\d{2}\/\d{2}\/\d{4}\-\d{2}\/\d{2}\/\d{4}')
-        check = re.match(date_regex, inputs_combined)
-        if check is None: # notify user if no match
-            label_text.set("Please enter a valid date range")
-        else:
-            label_text.set(f"Fetching results for {check.group()}. You can now close this window.")
-            return check.group()
-    else:
-        user_choice = str(user_radio_choice.get())
-        if user_choice == '':
-            label_text.set(f"Please select between today's and this week's meetings")
-        else:
-            label_text.set(f"Fetching {str(user_radio_choice.get())}'s meetings information. You can now close this window.")
-        return user_choice
+# def validate_date_inputs():
+#     if str(event_target) == '.!frame.!button':
+#         # target user input
+#         inputs_combined = f"{from_date.get()}-{to_date.get()}"
+#         # check for valid input
+#         date_regex = re.compile(r'\d{2}\/\d{2}\/\d{4}\-\d{2}\/\d{2}\/\d{4}')
+#         check = re.match(date_regex, inputs_combined)
+#         if check is None: # notify user if no match
+#             label_text.set("Please enter a valid date range")
+#         else:
+#             label_text.set(f"Fetching results for {check.group()}. You can now close this window.")
+#             return check.group()
+#     else:
+#         user_choice = str(user_radio_choice.get())
+#         if user_choice == '':
+#             label_text.set(f"Please select between today's and this week's meetings")
+#         else:
+#             label_text.set(f"Fetching {str(user_radio_choice.get())}'s meetings information. You can now close this window.")
+#         return user_choice
 
 # ROOT WINDOW
 # root window
@@ -50,41 +67,46 @@ instructions_font = font.Font(family ='TkDefaultFont', size = 12)
 widget_font = font.Font(family ='TkDefaultFont', size = 11)
 message_font = font.Font(family ='TkDefaultFont', size = 12, weight ='bold')
 
-# FRAMESgit
-# instructions frame - to host instructions label one
-instructions_frame = ttk.Frame(root, width = root_width, height = 50, padding = "5 10 0 0")
-instructions_frame.pack(anchor = N, side = TOP, fill = X)
+# date picker instructions frame
+date_picker_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
+date_picker_instructions_frame.pack(anchor = N, side = TOP, fill = X)
+# instruction label one
+instuctions_label_one = ttk.Label(date_picker_instructions_frame, text = "Select a date range", font = instructions_font)
+instuctions_label_one.pack(side = LEFT)
 
 # parent frame for 'from date' label and 'calendar for' frame
-parent_frame = ttk.Frame(root, width = root_width, height = root_height, padding = 10)
+parent_frame = ttk.Frame(root, padding = 10)
 parent_frame.pack(anchor = N, side = TOP, fill = X)
-
-# parent for 'end date' label and 'calendar to' frame
-parent_two_frame = ttk.Frame(root, width = root_width, height = root_height, padding = 10)
-parent_two_frame.pack(anchor = N, side = TOP, fill = X)
-
-# LABELS
-# widget labels
-instuctions_label_one = ttk.Label(instructions_frame, text = "Select a date range", font = instructions_font)
-instuctions_label_one.pack(side = LEFT)
+# 'from date' label
 from_date_label = ttk.Label(parent_frame, text = "From:", font = widget_font, padding = "0 0 5 0")
 from_date_label.pack(side = LEFT)
-to_date_label = ttk.Label(parent_two_frame, text = "To:", font = widget_font, padding = "0 0 22 0")
-to_date_label.pack(side = LEFT)
-
-# calendar frame
+# calendar 'from date' frame
 calendar_from_frame = ttk.Frame(parent_frame)
 calendar_from_frame.pack(side = LEFT)
-calendar_to_frame = ttk.Frame(parent_two_frame)
-calendar_to_frame.pack(side = LEFT)
-
-# entry item - for typing input
-from_date = StringVar()
+# calendar 'from date' picker
 cal_from_date = DateEntry(calendar_from_frame, selectmode = "day", font = widget_font)
 cal_from_date.pack()
-to_date = StringVar()
+cal_from_date.bind("<<DateEntrySelected>>", get_from_date)
+
+# parent for 'to date' label and 'calendar to' frame
+parent_two_frame = ttk.Frame(root, padding = 10)
+parent_two_frame.pack(anchor = N, side = TOP, fill = X)
+# 'to date' label
+to_date_label = ttk.Label(parent_two_frame, text = "To:", font = widget_font, padding = "0 0 22 0")
+to_date_label.pack(side = LEFT)
+# calendar 'to date' frame
+calendar_to_frame = ttk.Frame(parent_two_frame)
+calendar_to_frame.pack(side = LEFT)
+# caledar 'to date' picker
 cal_to_date = DateEntry(calendar_to_frame, selectmode = "day", font = widget_font)
 cal_to_date.pack()
+cal_to_date.bind("<<DateEntrySelected>>", get_to_date)
+
+# calendar button
+calendar_button_frame = ttk.Frame(root, height = 10)
+calendar_button_frame.pack(anchor = N, side = LEFT)
+calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch")
+calendar_fetch_button.pack()
 
 # run window loop
 root.mainloop()
