@@ -3,9 +3,11 @@ from tkinter import *
 from tkinter import ttk, font
 from tkcalendar import Calendar, DateEntry
 from datetime import datetime as dt
+import logging
 
 # local modules
 import config
+from logging_setup import *
 
 # identify which button was pressed
 def return_pressed_button(event):
@@ -14,14 +16,20 @@ def return_pressed_button(event):
     print(event_target)
     return event_target
 
-# check if dates are in the right order
+# updates config variable based on user input
+def set_radio_button_choice():
+    config.user_radiobutton_choice = str(user_choice.get())
+    print(config.user_radiobutton_choice)
+
+# check if calendar widget dates are in the right order
 def check_dates_order():
-    if config.button_pressed == '.!frame5.!button':
+    if config.user_radiobutton_choice == 'calendar':
         if config.calendar_from_date > config.calendar_to_date:
             config.dates_in_right_order = False
             button_label_text.set("Dates are in the wrong order")
         else:
             config.dates_in_right_order = True
+            logging.info((f"Fetched results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}\n"))
             button_label_text.set(f"Fetching results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
 # set calendar_from_date, calendar_to_date and button_pressed in config.py
@@ -75,6 +83,9 @@ message_font = font.Font(family ='TkDefaultFont', size = 11, weight ='bold')
 date_picker_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
 date_picker_instructions_frame.pack(anchor = N, side = TOP, fill = X)
 # instructions label
+user_choice = StringVar()
+date_check = ttk.Radiobutton(date_picker_instructions_frame, value = "calendar", variable = user_choice, command = set_radio_button_choice)
+date_check.pack(side = LEFT)
 date_picker_instuctions_label = ttk.Label(date_picker_instructions_frame, text = "Select a date range", font = instructions_font)
 date_picker_instuctions_label.pack(side = LEFT)
 
@@ -98,6 +109,15 @@ to_date_label.pack(side = LEFT)
 cal_to_date = DateEntry(parent_two_frame, selectmode = "day", font = widget_font)
 cal_to_date.pack(side = LEFT)
 
+# RADIO BUTTONS
+radio_button_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
+radio_button_instructions_frame.pack(anchor = N, side = TOP, fill = X)
+radio_check = ttk.Radiobutton(radio_button_instructions_frame, value = "radio", variable = user_choice, command = set_radio_button_choice)
+radio_check.pack(side = LEFT)
+# instructions label
+radio_button_label = ttk.Label(radio_button_instructions_frame, text = "Select today's or this week's meetings", font = instructions_font)
+radio_button_label.pack(side = LEFT)
+
 # button label frame and label
 button_label_frame = ttk.Frame(root, padding = "12 10 0 5")
 button_label_frame.pack(anchor = N, side = TOP, fill = X)
@@ -106,19 +126,12 @@ button_label = ttk.Label(button_label_frame, textvariable = button_label_text, f
 button_label.pack(side = LEFT)
 
 # calendar button frame
-calendar_button_frame = ttk.Frame(root)
-calendar_button_frame.pack(anchor = N, side = TOP, fill = X)
+button_frame = ttk.Frame(root)
+button_frame.pack(anchor = N, side = TOP, fill = X)
 # button
-calendar_fetch_button = ttk.Button(calendar_button_frame, text = "Fetch results", command = lambda: [return_user_input(), check_dates_order()])
-calendar_fetch_button.config(width = 20, padding = "2 2 2 2")
-calendar_fetch_button.pack(anchor = N, side = LEFT, padx = 10, pady = 5)
-
-# RADIO BUTTONS
-radio_button_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
-radio_button_instructions_frame.pack(anchor = N, side = TOP, fill = X)
-# instructions label
-radio_button_label = ttk.Label(radio_button_instructions_frame, text = "Select today's or this week's meetings", font = instructions_font)
-radio_button_label.pack(side = LEFT)
+fetch_button = ttk.Button(button_frame, text = "Fetch results", command = lambda: [return_user_input(), check_dates_order()])
+fetch_button.config(width = 20, padding = "2 2 2 2")
+fetch_button.pack(anchor = N, side = LEFT, padx = 10, pady = 5)
 
 # run window loop
 root.bind("<Button>", return_pressed_button) # monitor which button is getting clicked

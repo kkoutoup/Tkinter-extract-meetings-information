@@ -10,11 +10,9 @@ import logging, json, csv
 from helper_functions import extract_activity_types, extract_activity_titles, extract_activities_times, format_activity_times
 from tk_gui import *
 from translate_user_input import translate_user_input
+from logging_setup import *
 
 def main():
-    # set up logging
-    logging.basicConfig(filename='meetings_report.log', format='%(asctime)s-%(levelname)s\n%(message)s', datefmt='%d/%m/%Y @ %H:%M:%S', filemode='w', level=logging.INFO)
-
     def build_request_url():
         user_input = translate_user_input()
         # api endpoint example: 'https://committees-api.parliament.uk/api/Broadcast/Meetings?FromDate=2023-03-13&ToDate=2023-03-19' \
