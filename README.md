@@ -16,8 +16,9 @@ Help with checking committee meetings information appearing in Parliament's publ
 ## Instructions
 - Download repo
 - Run ```extract_meetings_information.pyw```
-- In the new window select between ```today```, ```week``` or ```date range```
-to extract meetings information for the day, week or date range respectively.
+- In the new window select between
+    - ```date range``` using the date picker to extract meetings information in a desired date range
+    - or between ```today```, ```week``` from the radio buttons to exact the day's or week's meetings respectively
 - Click the "Fetch results" button and close the window. A .log, .json and .csv file should appear in the project's folder.
 
 ## Data collected
