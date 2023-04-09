@@ -96,7 +96,7 @@ parent_frame.pack(anchor = N, side = TOP, fill = X)
 from_date_label = ttk.Label(parent_frame, text = "From:", font = widget_font, padding = "0 0 5 0")
 from_date_label.pack(side = LEFT)
 # calendar 'from date' picker
-cal_from_date = DateEntry(parent_frame, selectmode = "day", font = widget_font)
+cal_from_date = DateEntry(parent_frame, selectmode = "day", font = widget_font, date_pattern='dd/MM/yyyy')
 cal_from_date.pack(side  = LEFT)
 
 # parent for 'to date' label and 'calendar to' frame
@@ -106,7 +106,7 @@ parent_two_frame.pack(anchor = N, side = TOP, fill = X)
 to_date_label = ttk.Label(parent_two_frame, text = "To:", font = widget_font, padding = "0 0 22 0")
 to_date_label.pack(side = LEFT)
 # caledar 'to date' picker
-cal_to_date = DateEntry(parent_two_frame, selectmode = "day", font = widget_font)
+cal_to_date = DateEntry(parent_two_frame, selectmode = "day", font = widget_font, date_pattern='dd/MM/yyyy')
 cal_to_date.pack(side = LEFT)
 
 # RADIO BUTTONS
