@@ -1,5 +1,6 @@
 # Python modules
-from datetime import datetime, date, timedelta
+from datetime import datetime as dt
+from datetime import date, timedelta
 
 def extract_activity_titles(item):
     activity_titles = []
@@ -24,8 +25,8 @@ def extract_activities_times(item):
     activity_times = []
     if event_activities:
         for item in event_activities:
-            item_start_time = datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M')
-            item_end_time = datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M')
+            item_start_time = dt.strftime(dt.fromisoformat(item['startTime']), '%H:%M')
+            item_end_time = dt.strftime(dt.fromisoformat(item['endTime']), '%H:%M')
             activity_times.append([item_start_time, item_end_time])
     else:
         activity_times.append('No activity times found')
