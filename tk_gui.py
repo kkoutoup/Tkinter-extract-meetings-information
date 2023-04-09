@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter import ttk, font
 from tkcalendar import Calendar, DateEntry
-import datetime
+from datetime import datetime as dt
 
 # local modules
 import config
@@ -21,7 +21,7 @@ def check_dates_order():
             button_label_text.set("Dates are in the wrong order")
         else:
             config.dates_in_right_order = True
-            button_label_text.set(f"Fetching results for {datetime.date.strftime(datetime.date.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {datetime.date.strftime(datetime.date.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
+            button_label_text.set(f"Fetching results for {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
 # set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():

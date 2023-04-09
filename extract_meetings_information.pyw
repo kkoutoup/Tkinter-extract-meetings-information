@@ -3,7 +3,7 @@ import urllib
 import urllib.request
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
-from datetime import datetime, date, timedelta
+from datetime import datetime as dt
 import logging, json, csv
 
 # local modules
@@ -63,11 +63,11 @@ def main():
                             # event ID
                             'Event ID': item['id'],
                             # date - from start time
-                            'Date': datetime.strftime(datetime.fromisoformat(item['startTime']), '%A %d %B %Y'),
+                            'Date': dt.strftime(dt.fromisoformat(item['startTime']), '%A %d %B %Y'),
                             # start time
-                            'Event start time': datetime.strftime(datetime.fromisoformat(item['startTime']), '%H:%M:%S'),
+                            'Event start time': dt.strftime(dt.fromisoformat(item['startTime']), '%H:%M:%S'),
                             # end time
-                            'Event end time': datetime.strftime(datetime.fromisoformat(item['endTime']), '%H:%M:%S'),
+                            'Event end time': dt.strftime(dt.fromisoformat(item['endTime']), '%H:%M:%S'),
                             # location
                             'Location': item['location']['description'],
                             # No of activities
