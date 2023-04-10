@@ -17,8 +17,16 @@ def return_pressed_button(event):
 # on radiobutton click update user_radiobutton_choice in config.py
 def set_radio_button_choice():
     config.user_radiobutton_choice = str(user_choice.get())
-    print(config.user_radiobutton_choice)
-    
+
+# check user choice and update user
+def check_day_week_choice():
+    if not config.today_week_choice is None:
+        button_label_text.set(f"Fetching {config.today_week_choice}'s meetings information. You may now close this window.")
+
+# set day/week user choice
+def set_day_week_choice():
+    config.today_week_choice = str(day_week_choice.get())
+
 # if user clicks on 'fetch' button but hasn't made a choice
 def update_user():
     if config.button_pressed == '.!frame7.!button' and config.user_radiobutton_choice == None:
@@ -32,38 +40,12 @@ def check_dates_order():
             button_label_text.set("Dates are in the wrong order")
         else:
             config.dates_in_right_order = True
-            logging.info((f"Fetched results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}\n"))
             button_label_text.set(f"Fetching results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
 # on 'fetch' button click set calendar_from_date, calendar_to_date in config.py
 def return_user_input():
     config.calendar_from_date = cal_from_date.get_date()
     config.calendar_to_date = cal_to_date.get_date()
-
-# get day/week user choice
-def set_day_week_choice():
-    print(day_week_choice.get())
-
-# validate user input and return values for api request
-# def validate_date_inputs():
-#     if str(event_target) == '.!frame.!button':
-#         # target user input
-#         inputs_combined = f"{from_date.get()}-{to_date.get()}"
-#         # check for valid input
-#         date_regex = re.compile(r'\d{2}\/\d{2}\/\d{4}\-\d{2}\/\d{2}\/\d{4}')
-#         check = re.match(date_regex, inputs_combined)
-#         if check is None: # notify user if no match
-#             label_text.set("Please enter a valid date range")
-#         else:
-#             label_text.set(f"Fetching results for {check.group()}. You can now close this window.")
-#             return check.group()
-#     else:
-#         user_choice = str(user_radio_choice.get())
-#         if user_choice == '':
-#             label_text.set(f"Please select between today's and this week's meetings")
-#         else:
-#             label_text.set(f"Fetching {str(user_radio_choice.get())}'s meetings information. You can now close this window.")
-#         return user_choice
 
 # GUI SETUP
 # ROOT WINDOW
@@ -148,7 +130,7 @@ button_frame.pack(anchor = "n", side = "top", fill = "x")
 button_style = ttk.Style()
 button_style.configure('big.TButton', font = widget_font)
 # button
-fetch_button = ttk.Button(button_frame, text = "Fetch results", style = 'big.TButton', command = lambda: [return_user_input(), check_dates_order(), update_user()])
+fetch_button = ttk.Button(button_frame, text = "Fetch results", style = 'big.TButton', command = lambda: [return_user_input(), check_dates_order(), update_user(), check_day_week_choice()])
 fetch_button.config(width = 20, padding = "2 2 2 2")
 fetch_button.pack(anchor = "n", side = "left", padx = 10, pady = 5)
 

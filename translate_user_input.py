@@ -6,20 +6,19 @@ import time
 from helper_functions import calculate_days_of_the_week
 from tk_gui import *
 import config
+from logging_setup import *
 
 def translate_user_input():
     if config.user_radiobutton_choice == 'calendar':
         if config.dates_in_right_order:
+            logging.info((f"Fetched results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}\n"))
             return [config.calendar_from_date, config.calendar_to_date]
-    # possible scenarios: 'today', 'week', date range
-    # user_input = return_user_input()
-    # today
-    # if user_input == 'today':
-    #     todays_date = date.today()
-    #     time.sleep(1) # in some cases 'today' was returning 'None'. Pausing script to avoid that.
-    #     return f"{todays_date}/{todays_date}" # api endpoint needs two values (from/to) - in this case they match
-    # elif user_input == 'week':
-    #    result = calculate_days_of_the_week()
-    #    return result
-    # else:
-    #     return user_input
+    if config.user_radiobutton_choice == 'radio':
+        if config.today_week_choice == 'today':
+            todays_date = date.today()
+            logging.info(f"Fetched meetings information for {todays_date}\n")
+            return [todays_date, todays_date]
+        else:
+            result = calculate_days_of_the_week()
+            logging.info(f"Fetched this week's meetings information\n")
+            return result.split("/")
