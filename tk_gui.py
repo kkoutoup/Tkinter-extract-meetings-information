@@ -9,6 +9,7 @@ import logging
 import config
 from logging_setup import *
 
+# GUI CHECKS
 # identify which button was pressed
 def return_pressed_button(event):
     global event_target
@@ -21,7 +22,12 @@ def set_radio_button_choice():
     config.user_radiobutton_choice = str(user_choice.get())
     print(config.user_radiobutton_choice)
 
-# check if calendar widget dates are in the right order
+# if user clicks on 'fetch' button but hasn't made a choice
+def update_user():
+    if str(event_target) == '.!frame6.!button' and config.user_radiobutton_choice == None:
+        button_label_text.set("Please select one of the two options")
+
+# on button click check if calendar widget dates are in the right order
 def check_dates_order():
     if config.user_radiobutton_choice == 'calendar':
         if config.calendar_from_date > config.calendar_to_date:
@@ -32,7 +38,7 @@ def check_dates_order():
             logging.info((f"Fetched results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}\n"))
             button_label_text.set(f"Fetching results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
-# set calendar_from_date, calendar_to_date and button_pressed in config.py
+# on button click set calendar_from_date, calendar_to_date and button_pressed in config.py
 def return_user_input():
     config.calendar_from_date = cal_from_date.get_date()
     config.calendar_to_date = cal_to_date.get_date()
@@ -59,8 +65,8 @@ def return_user_input():
 #             label_text.set(f"Fetching {str(user_radio_choice.get())}'s meetings information. You can now close this window.")
 #         return user_choice
 
+# GUI SETUP
 # ROOT WINDOW
-# root window
 root = Tk()
 root.title("Committee meetings information")
 
@@ -83,7 +89,7 @@ message_font = font.Font(family ='TkDefaultFont', size = 11, weight ='bold')
 date_picker_instructions_frame = ttk.Frame(root, padding = "5 10 0 0")
 date_picker_instructions_frame.pack(anchor = N, side = TOP, fill = X)
 # instructions label
-user_choice = StringVar()
+user_choice = StringVar() # set up as StringVar to update later
 date_check = ttk.Radiobutton(date_picker_instructions_frame, value = "calendar", variable = user_choice, command = set_radio_button_choice)
 date_check.pack(side = LEFT)
 date_picker_instuctions_label = ttk.Label(date_picker_instructions_frame, text = "Select a date range", font = instructions_font)
@@ -129,7 +135,7 @@ button_label.pack(side = LEFT)
 button_frame = ttk.Frame(root)
 button_frame.pack(anchor = N, side = TOP, fill = X)
 # button
-fetch_button = ttk.Button(button_frame, text = "Fetch results", command = lambda: [return_user_input(), check_dates_order()])
+fetch_button = ttk.Button(button_frame, text = "Fetch results", command = lambda: [return_user_input(), check_dates_order(), update_user()])
 fetch_button.config(width = 20, padding = "2 2 2 2")
 fetch_button.pack(anchor = N, side = LEFT, padx = 10, pady = 5)
 

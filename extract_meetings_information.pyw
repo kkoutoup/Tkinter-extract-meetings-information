@@ -4,7 +4,7 @@ import urllib.request
 from urllib.request import urlopen
 from urllib.error import URLError, HTTPError
 from datetime import datetime as dt
-import logging, json, csv
+import json, csv
 
 # local modules
 from helper_functions import extract_activity_types, extract_activity_titles, extract_activities_times, format_activity_times
@@ -39,7 +39,7 @@ def main():
         print("=> Writing to file")
         try:
             with open('meetings_data.json', 'w', encoding='utf-8') as output_file:
-                json.dump(json.loads(api_response), output_file, indent=4) # json loads to get rid of "\" in response
+                json.dump(json.loads(api_response), output_file, indent=4) # type: ignore # json loads to get rid of "\" in response
         except Exception as e:
             logging.info("Problems writing to file: {e}")
         
