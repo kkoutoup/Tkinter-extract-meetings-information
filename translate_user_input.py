@@ -8,7 +8,7 @@ from tk_gui import *
 import config
 
 def translate_user_input():
-    if config.user_radiobutton_choice == 'calendar': # if user selected the calendar radiobutton
+    if config.user_radiobutton_choice == 'calendar':
         if config.dates_in_right_order:
             return [config.calendar_from_date, config.calendar_to_date]
     # possible scenarios: 'today', 'week', date range

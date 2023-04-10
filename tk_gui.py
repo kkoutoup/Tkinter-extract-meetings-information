@@ -10,24 +10,22 @@ import config
 from logging_setup import *
 
 # GUI CHECKS
-# identify which button was pressed
+# on 'fetch' button click update button_pressed in config.py
 def return_pressed_button(event):
-    global event_target
-    event_target = str(event.widget)
-    print(event_target)
-    return event_target
+    config.button_pressed = str(event.widget)
+    print(config.button_pressed)
 
-# updates config variable based on user input
+# on radiobutton click update user_radiobutton_choice in config.py
 def set_radio_button_choice():
     config.user_radiobutton_choice = str(user_choice.get())
     print(config.user_radiobutton_choice)
 
 # if user clicks on 'fetch' button but hasn't made a choice
 def update_user():
-    if str(event_target) == '.!frame6.!button' and config.user_radiobutton_choice == None:
+    if config.button_pressed == '.!frame6.!button' and config.user_radiobutton_choice == None:
         button_label_text.set("Please select one of the two options")
 
-# on button click check if calendar widget dates are in the right order
+# on 'fetch' button click check if calendar widget dates are in the right order
 def check_dates_order():
     if config.user_radiobutton_choice == 'calendar':
         if config.calendar_from_date > config.calendar_to_date:
@@ -38,11 +36,10 @@ def check_dates_order():
             logging.info((f"Fetched results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}\n"))
             button_label_text.set(f"Fetching results from {dt.strftime(dt.fromisoformat(str(config.calendar_from_date)), '%d/%m/%Y')} to {dt.strftime(dt.fromisoformat(str(config.calendar_to_date)), '%d/%m/%Y')}. You may now close this window.")
 
-# on button click set calendar_from_date, calendar_to_date and button_pressed in config.py
+# on 'fetch' button click set calendar_from_date, calendar_to_date in config.py
 def return_user_input():
     config.calendar_from_date = cal_from_date.get_date()
     config.calendar_to_date = cal_to_date.get_date()
-    config.button_pressed = str(event_target)
 
 # validate user input and return values for api request
 # def validate_date_inputs():
