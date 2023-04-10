@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import ttk, font
 from tkcalendar import Calendar, DateEntry
 from datetime import datetime as dt
-import logging
 
 # local modules
 import config
@@ -20,7 +19,7 @@ def set_radio_button_choice():
 
 # check user choice and update user
 def check_day_week_choice():
-    if not config.today_week_choice is None:
+    if not config.today_week_choice is None and config.user_radiobutton_choice == 'radio':
         button_label_text.set(f"Fetching {config.today_week_choice}'s meetings information. You may now close this window.")
 
 # set day/week user choice
