@@ -5,7 +5,7 @@ Python script that extracts committee meetings information from UK Parliament's 
 - Meetings within a date range
 Gathered data are exported in csv and json format.
 
-This is an alternative to [this Python script](https://github.com/kkoutoup/API-extract-meetings-information) that gets user input through the terminal.
+This is an alternative to the CLI version of [this Python script](https://github.com/kkoutoup/API-extract-meetings-information).
 
 ## Category
 API/data collection
